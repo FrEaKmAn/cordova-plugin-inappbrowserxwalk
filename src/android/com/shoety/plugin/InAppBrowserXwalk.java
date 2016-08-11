@@ -17,7 +17,6 @@ import org.json.JSONObject;
 import org.xwalk.core.XWalkCookieManager;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkView;
-import org.xwalk.core.internal.XWalkViewInternal;
 
 public class InAppBrowserXwalk extends CordovaPlugin
 {
@@ -52,6 +51,11 @@ public class InAppBrowserXwalk extends CordovaPlugin
         if (action.equals("executeScript"))
         {
             this.executeScript(data.getString(0));
+        }
+
+        if(action.equals("navigateToUrl"))
+        {
+            this.navigateToUrl(data.getString(0), callbackContext);
         }
 
 		if(action.equals("getUrl"))
@@ -250,6 +254,31 @@ public class InAppBrowserXwalk extends CordovaPlugin
                     callbackContext.sendPluginResult(result);
                 }
                 catch (JSONException ex)
+                {
+                    callbackContext.error(ex.getMessage());
+                }
+            }
+        });
+    }
+
+    private void navigateToUrl(final String url, final CallbackContext callbackContext)
+    {
+        this.cordova.getActivity().runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    xWalkWebView.load(url, "");
+
+                    JSONObject obj = new JSONObject();
+
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
+                    result.setKeepCallback(true);
+                    callbackContext.sendPluginResult(result);
+                }
+                catch (Exception ex)
                 {
                     callbackContext.error(ex.getMessage());
                 }

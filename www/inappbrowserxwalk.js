@@ -27,6 +27,9 @@ InAppBrowserXwalk.prototype = {
 	},
 	getUrl: function(callback, errorCallback) {
 		cordova.exec(callback, errorCallback, "InAppBrowserXwalk", "getUrl", []);
+	},
+	navigateToUrl: function(url, callback, errorCallback) {
+		cordova.exec(callback, errorCallback, "InAppBrowserXwalk", "navigateToUrl", [url]);
 	}
 };
 
