@@ -212,23 +212,29 @@ public class InAppBrowserXwalk extends CordovaPlugin
         });
     }
 
-	private void getUrl(CallbackContext callbackContext)
+    private void getUrl(final CallbackContext callbackContext)
     {
-		try
+        this.cordova.getActivity().runOnUiThread(new Runnable()
         {
-			JSONObject obj = new JSONObject();
-			obj.put("url", this.xWalkWebView.getUrl());
+            @Override
+            public void run()
+            {
+                try
+                {
+                    JSONObject obj = new JSONObject();
+                    obj.put("url", xWalkWebView.getUrl());
 
-			PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
-            result.setKeepCallback(true);
-
-			callbackContext.sendPluginResult(result);
-		}
-        catch (JSONException ex)
-        {
-            callbackContext.error(ex.getMessage());
-        }
-	}
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
+                    result.setKeepCallback(true);
+                    callbackContext.sendPluginResult(result);
+                }
+                catch (JSONException ex)
+                {
+                    callbackContext.error(ex.getMessage());
+                }
+            }
+        });
+    }
 
     private void hideBrowser()
     {
