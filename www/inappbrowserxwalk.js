@@ -31,15 +31,15 @@ InAppBrowserXwalk.prototype = {
 };
 
 var callback = function(event) {
-    if (event.type === "loadstart" && callbacks.loadstart !== undefined) {
-        callbacks.loadstart(event.url);
-    }
-    if (event.type === "loadstop" && callbacks.loadstop !== undefined) {
-        callbacks.loadstop(event.url);
-    }
-    if (event.type === "exit" && callbacks.exit !== undefined) {
-        callbacks.exit();
-    }
+	var names = ['loadstart', 'loadstop', 'exit', 'updatevisithistory'];
+    var index = names.indexOf(event.type);
+
+	if(index > -1) {
+		var name = names[index];
+		if(callbacks[name] !== undefined) {
+			callbacks[name](event);
+		}
+	}
 };
 
 module.exports = {

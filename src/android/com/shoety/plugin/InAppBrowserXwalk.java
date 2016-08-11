@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import org.xwalk.core.XWalkCookieManager;
 import org.xwalk.core.XWalkResourceClient;
 import org.xwalk.core.XWalkView;
+import org.xwalk.core.internal.XWalkViewInternal;
 
 public class InAppBrowserXwalk extends CordovaPlugin
 {
@@ -76,6 +77,26 @@ public class InAppBrowserXwalk extends CordovaPlugin
                    JSONObject obj = new JSONObject();
                    obj.put("type", "loadstart");
                    obj.put("url", url);
+
+                   PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
+                   result.setKeepCallback(true);
+                   callbackContext.sendPluginResult(result);
+               }
+               catch (JSONException ex)
+               {
+                   callbackContext.error(ex.getMessage());
+               }
+           }
+
+           @Override
+           public void doUpdateVisitedHistory(XWalkView view, String url, boolean isReload)
+           {
+               try
+               {
+                   JSONObject obj = new JSONObject();
+                   obj.put("type", "updatevisithistory");
+                   obj.put("url", url);
+                   obj.put("isreload", isReload);
 
                    PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
                    result.setKeepCallback(true);
