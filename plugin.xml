@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="com.shoety.cordova.plugin.inappbrowserxwalk"
-        version="0.3.3">
+        version="0.4.0">
   <name>InAppBrowser Crosswalk</name>
 
   <engines>
@@ -17,7 +17,7 @@
   <platform name="android">
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="InAppBrowserXwalk">
-        <param name="android-package" value="com.shoety.plugin.InAppBrowserXwalk.InAppBrowserXwalk"/>
+        <param name="android-package" value="com.shoety.plugin.InAppBrowserXwalk"/>
       </feature>
     </config-file>
 
